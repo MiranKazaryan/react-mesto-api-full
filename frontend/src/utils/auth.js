@@ -1,4 +1,4 @@
-export const baseUrl = "https://auth.nomoreparties.co";
+export const baseUrl = "http://mirankazaryan.nomoredomains.sbs/";
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
