@@ -1,11 +1,13 @@
-export const baseUrl = "http://mirankazaryan.nomoredomains.sbs/";
+export const baseUrl = "mirankazaryan.nomoredomains.sbs";
 const checkResponse = (res) => {
+  console.log(res);
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status.message}`);
 };
 export const register = (password, email) => {
+  console.log('222');
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {

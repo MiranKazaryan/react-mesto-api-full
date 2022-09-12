@@ -1,5 +1,6 @@
 class Api {
   constructor({ baseUrl, headers }) {
+    console.log(headers);
     // тело конструктора
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -78,9 +79,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "http://mirankazaryan.nomoredomains.sbs/",
+  baseUrl: "http://mirankazaryan.nomoredomains.sbs",
   headers: {
-    authorization: "67007484-30da-42a1-bd4b-bc44f25f087d",
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   },
 });

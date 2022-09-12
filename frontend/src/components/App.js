@@ -201,6 +201,7 @@ function App() {
   }
 
   function handleSignupSubmit(password, email) {
+    console.log('222');
     auth
       .register(password, email)
       .then((response) => {
