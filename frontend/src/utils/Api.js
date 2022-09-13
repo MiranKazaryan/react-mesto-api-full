@@ -13,14 +13,20 @@ class Api {
   //получение данных пользователя
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._checkResponse);
   }
   //получение карточек
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
-      this._checkResponse
-    );
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+    }).then(this._checkResponse);
   }
   //редактирование данных пользователя
   editProfile(data) {
@@ -49,14 +55,18 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id} `, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse).then(data => data)
+    })
+      .then(this._checkResponse)
+      .then((data) => data);
   }
   //добавление лайка
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes `, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse).then(data => data)
+    })
+      .then(this._checkResponse)
+      .then((data) => data);
   }
   //удаление лайка
   deleteLike(id) {
@@ -80,7 +90,7 @@ class Api {
 export const api = new Api({
   baseUrl: "https://mirankazaryan.nomoredomains.sbs",
   headers: {
-    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });
