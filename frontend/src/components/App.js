@@ -93,8 +93,8 @@ function App() {
   //хук обновляющий информацию о пользователе и карточках
   useEffect(() => {
     if(loggedIn){
-    //handleCheckToken();
-    Promise.all([api.getInitialCards(), api.getProfile(), handleCheckToken()])
+    handleCheckToken();
+    Promise.all([api.getInitialCards(), api.getProfile()])
       .then(([cardList, res]) => {
         setCurrentUser(res);
         setCards(cardList);
