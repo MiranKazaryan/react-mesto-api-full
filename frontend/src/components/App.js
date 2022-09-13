@@ -92,8 +92,9 @@ function App() {
   }
   //хук обновляющий информацию о пользователе и карточках
   useEffect(() => {
-    handleCheckToken();
-    Promise.all([api.getInitialCards(), api.getProfile()])
+    if(loggedIn){
+    //handleCheckToken();
+    Promise.all([api.getInitialCards(), api.getProfile(), handleCheckToken()])
       .then(([cardList, res]) => {
         setCurrentUser(res);
         setCards(cardList);
@@ -101,7 +102,10 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+      handlePath("/");
+      history.push("/");
+    }
+  }, [loggedIn]);
   //открытие попапа подтверждения удаления
   function handleDeleteConfirm(card) {
     setDeletedCard(card);
@@ -240,6 +244,7 @@ function App() {
         .then((data) => {
           setLoggedIn(true);
           handleEmail(data.email);
+          console.log(loggedIn);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -248,12 +253,7 @@ function App() {
   }
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    if (loggedIn) {
-      handlePath("/");
-      history.push("/");
-    }
-  }, [loggedIn]);
+
 
   function handleOnLogout() {
     localStorage.removeItem("jwt");

@@ -1,13 +1,11 @@
-export const baseUrl = "http://localhost:3000";
+export const baseUrl = "https://mirankazaryan.nomoredomains.sbs";
 const checkResponse = (res) => {
-  console.log('res',res);
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status.message}`);
 };
 export const register = (email, password) => {
-  console.log('222');
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {

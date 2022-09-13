@@ -78,7 +78,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://mirankazaryan.nomoredomains.sbs",
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const AUTHORIZATION_ERROR = require('../errors/AuthorizationError');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const SECRET_KEY = 'super-strong-secret';
 // eslint-disable-next-line consistent-return
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify(token, SECRET_KEY);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
     throw new AUTHORIZATION_ERROR('Need authorization');
   }

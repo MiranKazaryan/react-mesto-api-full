@@ -6,6 +6,7 @@ const NOT_FOUND = require('../errors/NotFoundError');
 const CONFLICT_ERROR = require('../errors/ConflictError');
 
 const SECRET_KEY = 'super-strong-secret';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // получение данных о пользователях
 const getUsers = (req, res, next) => {
@@ -46,7 +47,6 @@ const createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  console.log(req.body);
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
@@ -74,7 +74,7 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SECRET_KEY, {
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
         expiresIn: '7d',
       });
 
