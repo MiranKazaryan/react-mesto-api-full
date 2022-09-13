@@ -1,6 +1,5 @@
 class Api {
   constructor({ baseUrl, headers }) {
-    console.log(headers);
     // тело конструктора
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -50,14 +49,14 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id} `, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then(this._checkResponse).then(data => data)
   }
   //добавление лайка
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes `, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then(this._checkResponse).then(data => data)
   }
   //удаление лайка
   deleteLike(id) {
@@ -79,7 +78,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "http://mirankazaryan.nomoredomains.sbs",
+  baseUrl: "http://localhost:3000",
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",

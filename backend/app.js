@@ -5,12 +5,12 @@ const cors = require('cors');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 const options = {
   origin: [
-    'http://localhost:3000',
+    'http://localhost:3010',
     'https://mrnkzrn.nomoredomains.sbs',
     'https://mirankazaryan.github.io',
     'http://mrnkzrn.nomoredomains.sbs',

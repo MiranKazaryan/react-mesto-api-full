@@ -48,14 +48,14 @@ function App() {
   //Постановка лайка
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes?.some((i) => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     if (isLiked) {
       api
         .deleteLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? newCard.card : c))
           );
         })
         .catch((err) => {
@@ -66,7 +66,7 @@ function App() {
         .addLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? newCard.card : c))
           );
         })
         .catch((err) => {
@@ -200,12 +200,10 @@ function App() {
     }
   }
 
-  function handleSignupSubmit(password, email) {
-    console.log('222');
+  function handleSignupSubmit(email, password) {
     auth
-      .register(password, email)
+      .register(email, password)
       .then((response) => {
-        console.log(response);
         setRegisteredIn(true);
         handlePath("/signin");
         history.push("/signin");
@@ -219,9 +217,9 @@ function App() {
       });
   }
 
-  function handleSigninSubmit(password, email) {
+  function handleSigninSubmit(email, password) {
     auth
-      .authorization(password, email)
+      .authorization(email, password)
       .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
@@ -235,13 +233,13 @@ function App() {
 
   function handleCheckToken() {
     const jwt = localStorage.getItem("jwt");
+
     if (jwt !== null && jwt !== "undefined") {
       auth
         .checkToken(jwt)
-        .then((res) => {
-          console.log("check", res.data.email);
+        .then((data) => {
           setLoggedIn(true);
-          handleEmail(res.data.email);
+          handleEmail(data.email);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);

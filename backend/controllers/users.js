@@ -46,6 +46,7 @@ const createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
+  console.log(req.body);
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
@@ -76,6 +77,7 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, SECRET_KEY, {
         expiresIn: '7d',
       });
+
       res.send({ token });
     })
     .catch(next);

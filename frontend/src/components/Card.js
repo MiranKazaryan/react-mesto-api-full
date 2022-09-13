@@ -6,13 +6,13 @@ function Card({ card,onCardClick, onCardLike, onCardDelete }) {
   //использование контекста текущего пользователя
   const currentUser = useContext(CurrentUserContext);
   //проверка карточки на принадлежность пользователю
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner === currentUser._id;
   //класс удаления карточки
   const cardDeleteButtonClassName = `card__delete-button ${
     isOwn ? "" : "card__delete-button_hidden"
   }`;
   //проверка лайка карточки пользователем
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some((i) => i === currentUser._id);
   const cardLikeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_active" : ""
   }`;

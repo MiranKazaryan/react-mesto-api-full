@@ -1,29 +1,29 @@
-export const baseUrl = "mirankazaryan.nomoredomains.sbs";
+export const baseUrl = "http://localhost:3000";
 const checkResponse = (res) => {
-  console.log(res);
+  console.log('res',res);
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status.message}`);
 };
-export const register = (password, email) => {
+export const register = (email, password) => {
   console.log('222');
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password, email }),
+    body: JSON.stringify({ email, password }),
   }).then(checkResponse);
 };
 
-export const authorization = (password, email) => {
+export const authorization = (email, password) => {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password, email }),
+    body: JSON.stringify({ email, password }),
   }).then(checkResponse);
 };
 
@@ -37,5 +37,5 @@ export const checkToken = (token) => {
     },
   })
     .then(checkResponse)
-    .then((data) => data);
+    //.then((data) => {console.log(data); return data});
 };

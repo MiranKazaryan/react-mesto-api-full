@@ -9,7 +9,7 @@ function Register({ onSubmit, onPathChange }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(password, email);
+    onSubmit(email, password);
   }
 
   return (
