@@ -89,6 +89,7 @@ function App() {
   }
   //хук обновляющий информацию о пользователе и карточках
   useEffect(() => {
+    console.log(loggedIn);
     handleCheckToken();
     if (loggedIn) {
       history.push("/");
