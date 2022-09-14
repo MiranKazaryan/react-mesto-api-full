@@ -42,9 +42,6 @@ function App() {
   //const navigate =  useNavigate();
   const history = useHistory();
 
-  function handlePath(newPath) {
-    setCurrentPath(newPath);
-  }
   //Постановка лайка
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -92,20 +89,37 @@ function App() {
   }
   //хук обновляющий информацию о пользователе и карточках
   useEffect(() => {
-    if(loggedIn){
     handleCheckToken();
-    Promise.all([api.getInitialCards(), api.getProfile()])
-      .then(([cardList, res]) => {
-        setCurrentUser(res);
-        setCards(cardList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      handlePath("/");
+    if (loggedIn) {
       history.push("/");
+      Promise.all([api.getInitialCards(), api.getProfile()])
+        .then(([cardList, res]) => {
+          setCurrentUser(res);
+          setCards(cardList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [loggedIn]);
+
+  function handleCheckToken() {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt !== null && jwt !== "undefined") {
+      auth
+        .checkToken(jwt)
+        .then((data) => {
+          handleEmail(data.email);
+          setLoggedIn(true);
+          history.push("/");
+        })
+        .catch((err) => {
+          setLoggedIn(false);
+          console.log(`Ошибка: ${err}`);
+        });
+    }
+  }
+
   //открытие попапа подтверждения удаления
   function handleDeleteConfirm(card) {
     setDeletedCard(card);
@@ -209,7 +223,6 @@ function App() {
       .register(email, password)
       .then((response) => {
         setRegisteredIn(true);
-        handlePath("/signin");
         history.push("/signin");
       })
       .catch((err) => {
@@ -235,25 +248,7 @@ function App() {
       });
   }
 
-  function handleCheckToken() {
-    const jwt = localStorage.getItem("jwt");
-
-    if (jwt !== null && jwt !== "undefined") {
-      auth
-        .checkToken(jwt)
-        .then((data) => {
-          setLoggedIn(true);
-          handleEmail(data.email);
-          console.log(loggedIn);
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        });
-    }
-  }
   const [email, setEmail] = useState("");
-
-
 
   function handleOnLogout() {
     localStorage.removeItem("jwt");
@@ -275,15 +270,11 @@ function App() {
         />
 
         <Switch>
-          <Route path="/signup">
-            <Register
-              onSubmit={handleSignupSubmit}
-              onPathChange={handlePath}
-              email={email}
-            />
-          </Route>
           <Route path="/signin">
             <Login onSubmit={handleSigninSubmit} email={email} />
+          </Route>
+          <Route path="/signup">
+            <Register onSubmit={handleSignupSubmit} email={email} />
           </Route>
           <ProtectedRoute
             path="/"

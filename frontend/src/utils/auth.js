@@ -35,5 +35,4 @@ export const checkToken = (token) => {
     },
   })
     .then(checkResponse)
-    //.then((data) => {console.log(data); return data});
 };

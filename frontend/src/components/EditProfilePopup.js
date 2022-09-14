@@ -14,9 +14,9 @@ function EditProfilePopup({
   const [description, setDescription] = useState("");
 
   //валидация
-  const [nameValid, setNameValid] = useState(false);
+  const [nameValid, setNameValid] = useState(true);
   const [errorNameMessage, setErrorNameMessage] = useState("");
-  const [descriptionValid, setDescriptionValid] = useState(false);
+  const [descriptionValid, setDescriptionValid] = useState(true);
   const [errorDescriptionMessage, setErrorDescriptionMessage] = useState("");
   //использование контекста с текущими значениями пользователя
   const currentUser = useContext(CurrentUserContext);
@@ -25,9 +25,9 @@ function EditProfilePopup({
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-    setNameValid(false);
+    setNameValid(true);
     setErrorNameMessage("");
-    setDescriptionValid(false);
+    setDescriptionValid(true);
     setErrorDescriptionMessage("");
   }, [currentUser, isOpen]);
   //функция при изменение инпута name

@@ -3,7 +3,7 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Register({ onSubmit, onPathChange }) {
+function Register({ onSubmit}) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 

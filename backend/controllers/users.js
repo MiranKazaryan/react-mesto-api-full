@@ -5,7 +5,6 @@ const BAD_REQUEST = require('../errors/BadRequesError');
 const NOT_FOUND = require('../errors/NotFoundError');
 const CONFLICT_ERROR = require('../errors/ConflictError');
 
-const SECRET_KEY = 'super-strong-secret';
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 // получение данных о пользователях
