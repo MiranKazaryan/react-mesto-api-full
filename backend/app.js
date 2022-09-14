@@ -9,6 +9,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3000 } = process.env;
 const app = express();
 
+console.log('enviroment', process.env.NODE_ENV);
+
 const options = {
   origin: [
     'http://localhost:3010',
